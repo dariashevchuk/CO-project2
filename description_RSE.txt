@@ -1,0 +1,18 @@
+Solution to Resourceful Students - exact
+
+The problem is reduced to a graph problem. Nodes represent students, and edges - students that like each other.
+This solution is based on backtracking. Function findRepresentation visits all possible branches recursively. In the beginning of the backtracking function, a pruning attempt is being made. If the count of edges currently selected for the solution is higher or equal to current best representation, this solution is rejected, with all other potential solutions with these edges included. Then, the program checks if there are any more edges left to be checked. If not, it checks whether this solution is valid, that is if among all students not choosen for the representation there are no two students that like each other (there are no edges between leftover nodes). Then, an edge is taken from the edge set, and if both nodes of this edge were not visited in this solution, findRepresentation function is called again with this edge included. After completing the call, edge is removed from the set and findRepresentation is called without this edge.
+
+The checking of validity of the solution (isIndependentSet function) is done by iterating over all nodes. If given node is not marked as used in the solution, it is checked whether it has any neighbours which were not used in the solution (are outside the student representation). If the function finds such neighbour, it returns false. Otherwise, it returns true
+
+To make early pruning as frequent as possible, a heuristic is employed to order edges in a way that findes good solutions early. The heuristic is sorting the edges by smaller degree of nodes of this edge descending. This heuristic proved to be most effective of many we have tried (sorting ascending/descending by degree, sum of degrees, max of degrees, degeneracy ordering, lex-bfs, RCM ordering).
+
+In order to store information whether given node was used in particular solution most efficiently, this information is stored as bits in a long long type variable. This however limits the maximum number of nodes to 64, which is in compliance with task where N < 50. Unfortunately, in some test cases there were more than 64 nodes which makes the program get runtime error. We hope it won't be a problem.
+
+This solution was submitted on optil.io by Piotr Szymiec under the nickname of pitrek98. It has 54 points, in time of 622 seconds.
+
+The group:
+Cezary Suchorski
+Michał Żarnowski
+Dariia Shevchuk
+Piotr Szymiec
